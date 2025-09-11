@@ -1,17 +1,16 @@
 import { useState, useEffect } from 'react';
-import '../App.css'; // Note: The path is now ../App.css if you moved App.jsx
-import WeatherIcon from '../WeatherIcon'; // Adjust path if you move App.jsx
+import './App.css'; // Corrected Path
+import WeatherIcon from './WeatherIcon'; // Corrected Path
 import WeatherDisplay from './components/WeatherDisplay';
 import RecentSearches from './components/RecentSearches';
 
 function App() {
-  // All your state management stays here
+  // All your state management and functions remain the same
   const [city, setCity] = useState('');
   const [weatherData, setWeatherData] = useState(null);
   const [recentSearches, setRecentSearches] = useState([]);
   const [error, setError] = useState(null);
 
-  // All your functions (useEffect, fetchWeather, etc.) stay here
   useEffect(() => {
     const savedSearches = localStorage.getItem('recentSearches');
     if (savedSearches) {
@@ -20,15 +19,39 @@ function App() {
   }, []);
 
   const fetchWeather = async (cityName) => {
-    // ... (your existing fetchWeather function code)
+    if (!cityName) return;
+    setError(null);
+    const apiKey = import.meta.env.VITE_OPENWEATHER_API_KEY;
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=metric`;
+
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error('City not found. Please check the spelling.');
+      }
+      const data = await response.json();
+      setWeatherData(data);
+
+      setRecentSearches(prevSearches => {
+        const newSearches = [data.name, ...prevSearches.filter(c => c !== data.name)];
+        const updatedSearches = newSearches.slice(0, 5);
+        localStorage.setItem('recentSearches', JSON.stringify(updatedSearches));
+        return updatedSearches;
+      });
+    } catch (error) {
+      setError(error.message);
+      setWeatherData(null);
+    }
   };
 
   const handleFormSubmit = (event) => {
-    // ... (your existing handleFormSubmit function code)
+    event.preventDefault();
+    fetchWeather(city);
   };
 
   const handleRecentSearchClick = (searchCity) => {
-    // ... (your existing handleRecentSearchClick function code)
+    setCity(searchCity);
+    fetchWeather(searchCity);
   };
 
   return (
@@ -57,3 +80,4 @@ function App() {
 }
 
 export default App;
+
