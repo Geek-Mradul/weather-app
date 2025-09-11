@@ -87,3 +87,45 @@ h1 {
   margin-bottom: 0.5rem;
   cursor: pointer;
 }
+
+/* =================================== */
+/* RESPONSIVE STYLES         */
+/* =================================== */
+@media (max-width: 600px) {
+  @media (max-width: 600px) {
+    .weather-app {
+      width: 90%;
+      padding: 1.5rem;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+    }
+
+    /* Make the search bar stack vertically on small screens */
+    .search-bar {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .weather-display h2 {
+      font-size: 1.5rem;
+    }
+
+    .weather-icon {
+      font-size: 5rem;
+    }
+
+    .weather-description {
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .weather-details {
+      /* You could make this stack too, but flexbox's default wrapping is often fine */
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+  }
+
+}
