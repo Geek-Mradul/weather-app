@@ -1,142 +1,455 @@
-/* src/App.css */
+/* =================================== */
+/* DARK THEME & BASE STYLES          */
+/* =================================== */
+:root {
+  --background-color: #121212;
+  --panel-color: #1e1e1e;
+  --text-primary: #e0e0e0;
+  --text-secondary: #a0a0a0;
+  --accent-color: #007bff;
+  --border-color: #333333;
+  --hover-color: #2a2a2a;
+  --card-background: #2c2c2c;
+}
+
+/* ADDED: Light Theme Variable Overrides */
+.light-theme {
+  --background-color: #f4f7fa;
+  --panel-color: #ffffff;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --hover-color: #e9ecef;
+  --card-background: #ffffff;
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  background-color: #f0f2f5;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
+  background-color: var(--panel-color);
+  color: var(--text-primary);
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+  transition: background-color 0.3s, color 0.3s;
+  /* ADDED: Smooth theme transition */
 }
 
+/* =================================== */
+/* MOBILE LAYOUT (DEFAULT)           */
+/* =================================== */
 .weather-app {
-  background-color: white;
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  width: 90%;
-  max-width: 500px;
-  text-align: center;
+  width: 100%;
+  max-width: 450px;
+  margin: 0 auto;
+  background-color: transparent;
+  padding: 1.5rem;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
-h1 {
-  color: #333;
+.left-panel {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.right-panel {
+  display: none;
+}
+
+.app-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  color: var(--text-primary);
 }
 
 .search-bar {
   display: flex;
   gap: 0.5rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
+  position: relative;
 }
 
 .search-bar input {
   flex-grow: 1;
   padding: 0.75rem;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-color);
   border-radius: 8px;
   font-size: 1rem;
+  background-color: var(--card-background);
+  color: var(--text-primary);
+  padding-right: 2.5rem;
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23a0a0a0" viewBox="0 0 16 16"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .search-bar button {
+  display: none;
   padding: 0.75rem 1rem;
   border: none;
-  background-color: #007bff;
+  background-color: var(--accent-color);
   color: white;
   border-radius: 8px;
   font-size: 1rem;
   cursor: pointer;
 }
 
-.weather-display {
-  margin-bottom: 1.5rem;
+/* ADDED: Theme toggle button styles */
+.theme-toggle-button {
+  background: var(--card-background);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  line-height: 1;
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 10;
+  transition: background-color 0.3s, color 0.3s;
 }
 
-.weather-display h2 {
+.placeholder-text {
+  text-align: center;
+  padding: 4rem 1rem;
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+}
+
+.error-message {
+  color: #ff8a80;
+  background-color: rgba(211, 47, 47, 0.1);
+  border: 1px solid #d32f2f;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
   margin-bottom: 1rem;
 }
 
-.weather-details {
+.weather-display-grid {
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.main-temp-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.main-temp-display .weather-icon-large {
+  font-size: 4rem;
+  color: var(--accent-color);
+}
+
+.main-temp-display .temp-details {
+  text-align: left;
+}
+
+.main-temp-display .temp-value {
+  font-size: 4rem;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.main-temp-display .temp-unit {
+  font-size: 2rem;
+  color: var(--text-secondary);
+  vertical-align: top;
+}
+
+.main-temp-display .weather-description {
+  text-transform: capitalize;
+  color: var(--text-secondary);
+  margin-top: -0.5rem;
+}
+
+.side-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border-top: 1px solid var(--border-color);
+  padding-top: 1.5rem;
+}
+
+.side-details .current-city-name {
+  font-size: 2rem;
+  font-weight: 600;
   text-align: center;
+  margin: 0 0 1rem 0;
 }
 
-.weather-details p {
-  margin: 0.25rem 0;
+.side-details .detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
 }
 
-.weather-details span {
-  font-weight: bold;
+.side-details .detail-item p {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+.side-details .detail-item span {
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.forecast-container {
+  margin-top: 2rem;
+  border-top: 1px solid var(--border-color);
+  padding-top: 1.5rem;
+}
+
+.forecast-container h3 {
+  text-align: center;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.forecast-cards {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+
+.forecast-card {
+  background-color: var(--card-background);
+  border: 1px solid var(--border-color);
+  /* Added for definition in light mode */
+  border-radius: 8px;
+  padding: 0.75rem;
+  flex: 1 0 70px;
+  text-align: center;
+  transition: background-color 0.3s;
+}
+
+.forecast-icon {
+  font-size: 2rem;
+}
+
+.forecast-day {
+  font-weight: 500;
+}
+
+.recent-searches {
+  margin-top: 1rem;
+  border-top: 1px solid var(--border-color);
+  padding-top: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .recent-searches h3 {
-  border-top: 1px solid #eee;
-  padding-top: 1rem;
-  margin-top: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  text-align: center;
 }
 
 .recent-searches ul {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 .recent-searches li {
-  background-color: #f8f9fa;
-  padding: 0.5rem;
+  background-color: var(--card-background);
+  border: 1px solid var(--border-color);
+  /* Added for definition in light mode */
+  padding: 0.75rem;
   border-radius: 6px;
   margin-bottom: 0.5rem;
   cursor: pointer;
-}
-
-.error-message {
-  color: #d32f2f;
-  /* A standard material design error red */
-  background-color: #ffebee;
-  border: 1px solid #d32f2f;
-  padding: 1rem;
-  border-radius: 8px;
-  margin-top: 1rem;
   text-align: center;
+  transition: background-color 0.2s;
 }
 
-/* =================================== */
-/* RESPONSIVE STYLES         */
-/* =================================== */
-@media (max-width: 600px) {
-  @media (max-width: 600px) {
-    .weather-app {
-      width: 90%;
-      padding: 1.5rem;
-    }
+.recent-searches li:hover {
+  background-color: var(--hover-color);
+}
 
-    h1 {
-      font-size: 1.8rem;
-    }
-
-    /* Make the search bar stack vertically on small screens */
-    .search-bar {
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-
-    .weather-display h2 {
-      font-size: 1.5rem;
-    }
-
-    .weather-icon {
-      font-size: 5rem;
-    }
-
-    .weather-description {
-      font-size: 1.1rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .weather-details {
-      /* You could make this stack too, but flexbox's default wrapping is often fine */
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
+@media (min-width: 1024px) {
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
+  .weather-app {
+    max-width: 1200px;
+    height: 700px;
+    display: grid;
+    grid-template-columns: 2.5fr 1fr;
+    gap: 2rem;
+    padding: 2rem;
+  }
+
+  .theme-toggle-button {
+    top: 2rem;
+    right: 2rem;
+  }
+
+  .left-panel {
+    background-color: var(--panel-color);
+    border-radius: 16px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    border: 1px solid var(--border-color);
+  }
+
+  .left-panel .mobile-controls {
+    display: none;
+  }
+
+  .left-panel .main-content-display {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .right-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .left-panel .app-title {
+    text-align: left;
+    margin-bottom: 1rem;
+  }
+
+  .search-bar button {
+    display: inline-block;
+  }
+
+  .search-bar input {
+    padding-right: 0.75rem;
+    background-image: none;
+  }
+
+  .weather-display-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 3rem;
+    width: 100%;
+  }
+
+  .main-temp-display {
+    gap: 1.5rem;
+  }
+
+  .main-temp-display .weather-icon-large {
+    font-size: 8rem;
+  }
+
+  .main-temp-display .temp-value {
+    font-size: 7rem;
+  }
+
+  .main-temp-display .temp-unit {
+    font-size: 3.5rem;
+  }
+
+  .side-details {
+    border-top: none;
+    padding-top: 0;
+    border-left: 1px solid var(--border-color);
+    padding-left: 3rem;
+    align-self: center;
+  }
+
+  .side-details .current-city-name {
+    text-align: left;
+    font-size: 2.5rem;
+  }
+
+  .side-details .detail-item {
+    padding: 0.5rem 0;
+  }
+
+  .forecast-container {
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+  }
+
+  .forecast-container h3 {
+    text-align: left;
+  }
+
+  .forecast-cards {
+    justify-content: space-between;
+  }
+
+  .forecast-card {
+    flex-basis: auto;
+  }
+
+  .right-panel .recent-searches {
+    margin-top: 0;
+    border-top: none;
+    padding-top: 0;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--panel-color);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 0;
+  }
+
+  .right-panel .recent-searches h3 {
+    text-align: left;
+  }
+
+  .right-panel .recent-searches ul {
+    flex-grow: 1;
+    overflow-y: auto;
+  }
+}
+
+/* =================================== */
+/* CUSTOM SCROLLBAR STYLES           */
+/* =================================== */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--panel-color);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 10px;
+  border: 2px solid var(--panel-color);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color) var(--panel-color);
 }

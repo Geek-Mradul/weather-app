@@ -1,16 +1,30 @@
+// src/components/WeatherDisplay.jsx
 import React from 'react';
-import WeatherIcon from '../WeatherIcon'; // Note the path is now '../WeatherIcon'
+import WeatherIcon from '../WeatherIcon'; // Reverted to use your original icon component
 
 const WeatherDisplay = ({ weatherData }) => {
+    if (!weatherData) return null;
+
     return (
-        <div className="weather-display">
-            <h2>{weatherData.name}</h2>
-            <WeatherIcon
-                iconCode={weatherData.weather[0].icon}
-                className="weather-icon"
-            />
-            <p className="weather-description">{weatherData.weather[0].description}</p>
-            <div className="weather-details">
+        <div className="weather-display-grid">
+            {/* Main info: Icon, Temp, Description */}
+            <div className="main-temp-display">
+                <WeatherIcon
+                    iconCode={weatherData.weather[0].icon}
+                    className="weather-icon-large"
+                />
+                <div className="temp-details">
+                    <div className="temp-value">
+                        {Math.round(weatherData.main.temp)}
+                        <span className="temp-unit">°C</span>
+                    </div>
+                    <p className="weather-description">{weatherData.weather[0].description}</p>
+                </div>
+            </div>
+
+            {/* City and detailed stats */}
+            <div className="side-details">
+                <h2 className="current-city-name">{weatherData.name}</h2>
                 <div className="detail-item">
                     <p>Temperature</p>
                     <span>{Math.round(weatherData.main.temp)}°C</span>
