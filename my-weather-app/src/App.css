@@ -12,7 +12,7 @@
   --card-background: #2c2c2c;
 }
 
-/* ADDED: Light Theme Variable Overrides */
+/*Light Theme Variable Overrides */
 .light-theme {
   --background-color: #f4f7fa;
   --panel-color: #ffffff;
@@ -34,7 +34,6 @@ body {
   width: 100%;
   overflow-x: hidden;
   transition: background-color 0.3s, color 0.3s;
-  /* ADDED: Smooth theme transition */
 }
 
 /* =================================== */
@@ -101,7 +100,6 @@ body {
   cursor: pointer;
 }
 
-/* ADDED: Theme toggle button styles */
 .theme-toggle-button {
   background: var(--card-background);
   border: 1px solid var(--border-color);
@@ -229,7 +227,6 @@ body {
 .forecast-card {
   background-color: var(--card-background);
   border: 1px solid var(--border-color);
-  /* Added for definition in light mode */
   border-radius: 8px;
   padding: 0.75rem;
   flex: 1 0 70px;
@@ -267,7 +264,6 @@ body {
 .recent-searches li {
   background-color: var(--card-background);
   border: 1px solid var(--border-color);
-  /* Added for definition in light mode */
   padding: 0.75rem;
   border-radius: 6px;
   margin-bottom: 0.5rem;
@@ -289,7 +285,7 @@ body {
 
   .weather-app {
     max-width: 1200px;
-    height: 700px;
+    height: 625px;
     display: grid;
     grid-template-columns: 2.5fr 1fr;
     gap: 2rem;
@@ -297,14 +293,14 @@ body {
   }
 
   .theme-toggle-button {
-    top: 2rem;
-    right: 2rem;
+    top: 1.2rem;
+    right: 1.2rem;
   }
 
   .left-panel {
     background-color: var(--panel-color);
     border-radius: 16px;
-    padding: 2rem;
+    padding: 0.5rem 1rem;
     display: flex;
     flex-direction: column;
     position: relative;
