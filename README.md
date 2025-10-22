@@ -1,35 +1,5 @@
 ﻿# Weather App
 
-A simple, clean, and responsive web application that fetches and displays live weather data for any city.
-
-![image](/Screenshot.png)
-
----
-
-## Core Features
-
-- **Live Weather Data**: Fetches and displays current temperature, humidity, wind speed, and a weather description from the OpenWeatherMap API.
-- **Dynamic UI & Icons**: Includes weather icons that change according to the current conditions, providing an intuitive visual experience.
-- **5-Day Forecast**: Shows the weather forecast for the upcoming days, a feature included for bonus points.
-- **Persistent Search History**: Saves the last 5 unique cities to `localStorage`, allowing for quick access and data persistence.
-- **Responsive & Adaptive Design**: The user interface adapts smoothly from mobile to a two-panel desktop dashboard.
-- **Light & Dark Mode**: Features a theme toggle that saves the user's preference for a better viewing experience.
-- **Robust Error Handling**: Provides clear feedback for invalid city names or network issues, as required for proficiency.
-
----
-
-## Technologies Used
-
-- **Frontend**: React, Vite
-- **Styling**: CSS with Custom Properties (Variables), Flexbox, and Grid for responsive design.
-- **Icons**: React Icons
-- **API**: OpenWeatherMap API
-- **Deployment**: Docker, Nginx
-
----
-
-# Weather App
-
 A simple, clean, and responsive React application that fetches and displays live weather data for any city.
 
 ![image](/Screenshot.png)
@@ -194,32 +164,3 @@ heroku logs --tail -a your-app-name
 - Use `heroku logs --tail -a your-app-name` to inspect runtime errors.
 
 ---
-
-## License & credits
-
-This project is provided as-is. Replace or update this section as needed.
-
-    ```
-
-5. Verify DNS and SSL:
-
-    ```bash
-    dig +short CNAME weather.geekmradul.dev
-    curl -I https://weather.geekmradul.dev
-    heroku logs --tail -a geek-weather-app
-    ```
-
-6. If you need to set environment variables (for example the Vite API key) on Heroku, set them at build time and run time:
-
-    ```bash
-    # required at build-time for Vite client variables prefixed with VITE_
-    heroku config:set VITE_OPENWEATHER_API_KEY=your_api_key_here -a geek-weather-app
-    ```
-
-Notes & troubleshooting
-- If `dig` returns Cloudflare IPs or the CNAME target is not the herokudns host, re-check that Cloudflare proxy is OFF.
-- Use `heroku domains -a geek-weather-app` to see the DNS target and domain status.
-- If you prefer to host without Heroku's managed certs while using Cloudflare proxy, you'll need a paid Cloudflare plan or custom cert uploads on Heroku.
-
-If you want, I can run `heroku domains:wait` and `heroku certs:auto:enable` now and report back the cert provisioning status.
-
